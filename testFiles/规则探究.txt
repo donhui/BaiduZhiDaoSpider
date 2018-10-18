@@ -1,0 +1,19 @@
+带父母体检都检查什么东西 给父母体检如何选套餐：
+answer：div：wgt-best
+        wgt-recommend
+            ->div:bd answer
+                ->div:line content
+                    ->div:best-content-2758232946
+让父母做全面体检应该包括哪些项目？费用大概是多少：
+answer：div：wgt-best
+            ->div:bd answer
+                ->div:line content
+                    ->div:best-content-2865986484
+各位给父母做过体检吗:
+answer：div：wgt-answers
+            ->div:bd-wrap
+                ->div:bd answer
+                                                                 
+                answer-fold
+                    ->div:line content
+                        ->div:answer-content-2836072984
