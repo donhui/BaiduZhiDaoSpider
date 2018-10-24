@@ -38,6 +38,12 @@ class HtmlParser(object):
             else:
                 tmp_question=""
 
+            # 问题详情
+            if (len(tmp_etree.xpath('//*[@id="wgt-ask"]/div/span')) != 0):
+                tmp_question_detail = tmp_etree.xpath('//*[@id="wgt-ask"]/div/span')[0].text
+            else:
+                tmp_question_detail = ""
+
             # 回答
             # 判断是否存在best answer
             best_answer_id= re.findall("best-content-\d+",str(tmp_content))
@@ -57,9 +63,9 @@ class HtmlParser(object):
                 tmp_evaluate_terrible_num = tmp_etree.xpath(bad_rules)[0]
                 tmp_answer_content = all_content.split('</div>')[-2]
 
-                #['类别', '问题', '回答', '点赞数', '踩数']
+                #['类别', '问题', '问题详情', '回答', '点赞数', '踩数']
 
-                tmp_information = [tmp_category, tmp_question, tmp_answer_content, tmp_evaluate_good_num,
+                tmp_information = [tmp_category, tmp_question, tmp_question_detail, tmp_answer_content, tmp_evaluate_good_num,
                                    tmp_evaluate_terrible_num]
                 self.datas.append(tmp_information)
 
@@ -83,12 +89,8 @@ class HtmlParser(object):
                             if answers_id != answers_id_arr[0]:
                                 tmp_question = ""
 
-                        # ['类别','问题', '回答','点赞数','踩数']
+                        # ['类别','问题', '问题详情', '回答','点赞数','踩数']
 
-                        tmp_information=[tmp_category,tmp_question,tmp_answer_content,tmp_evaluate_good_num,tmp_evaluate_terrible_num]
+                        tmp_information=[tmp_category, tmp_question, tmp_question_detail, tmp_answer_content,tmp_evaluate_good_num,tmp_evaluate_terrible_num]
                         self.datas.append(tmp_information)
         return self.datas
-            
-            
-        
-        

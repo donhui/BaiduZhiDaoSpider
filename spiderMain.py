@@ -35,7 +35,7 @@ if __name__=='__main__':
     # 每个类别需要爬去的回答数
     threads = []
     paths=[]
-    category_Nums=800
+    category_Nums=20
 
     # cate="父母体检"
     # path="D:\\Works\\datas\\"+cate+"百度知道体检知识.xlsx"
