@@ -71,10 +71,12 @@ class HtmlParser(object):
                 tmp_evaluate_terrible_num = tmp_etree.xpath(bad_rules)[0]
                 tmp_answer_content = all_content.split('</div>')[-2]
 
-                #['类别', '问题', '问题详情', '回答总数', '回答', '点赞数', '踩数']
+                is_best_answer = "最佳答案"
+
+                # ['类别', '问题', '问题详情', '回答总数', '回答', '点赞数', '踩数'，'最佳答案']
 
                 tmp_information = [tmp_category, tmp_question, tmp_question_detail, answers_count, tmp_answer_content, tmp_evaluate_good_num,
-                                   tmp_evaluate_terrible_num]
+                                   tmp_evaluate_terrible_num, is_best_answer]
                 self.datas.append(tmp_information)
 
             # 普通答案
@@ -100,9 +102,11 @@ class HtmlParser(object):
                                 tmp_question = ""
                                 tmp_question_detail = ""
                                 answers_count = ""
+                        is_best_answer = ""
 
-                        # ['类别','问题', '问题详情', '回答','点赞数','踩数']
+                        # ['类别','问题', '问题详情', '回答','点赞数','踩数', '最佳答案']
 
-                        tmp_information=[tmp_category, tmp_question, tmp_question_detail, answers_count, tmp_answer_content,tmp_evaluate_good_num,tmp_evaluate_terrible_num]
+                        tmp_information=[tmp_category, tmp_question, tmp_question_detail, answers_count, tmp_answer_content,
+                                         tmp_evaluate_good_num,tmp_evaluate_terrible_num, is_best_answer]
                         self.datas.append(tmp_information)
         return self.datas
