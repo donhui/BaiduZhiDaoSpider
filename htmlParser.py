@@ -59,6 +59,8 @@ class HtmlParser(object):
             tmp_evaluate_good_num=""
             # 踩数
             tmp_evaluate_terrible_num=""
+
+            # 最佳答案
             if(len(best_answer_id) != 0):
                 best_answer=tmp_etree.xpath('//*[@id="'+best_answer_id[0]+'"]')[0]
                 all_content=etree.tostring(best_answer,encoding = "utf-8", pretty_print = True, method = "html").decode('utf-8')
@@ -75,9 +77,9 @@ class HtmlParser(object):
                                    tmp_evaluate_terrible_num]
                 self.datas.append(tmp_information)
 
-            else:
-                answers_id_arr=re.findall("answer-content-\d+",str(tmp_content))
-                if(len(answers_id_arr)!=0):
+            # 普通答案
+            answers_id_arr=re.findall("answer-content-\d+",str(tmp_content))
+            if(len(answers_id_arr)!=0):
                     for answers_id in answers_id_arr:
                         answer=tmp_etree.xpath('//*[@id="'+answers_id+'"]')[0]
                         all_content=etree.tostring(answer,encoding = "utf-8", pretty_print = True, method = "html").decode('utf-8')
@@ -91,10 +93,12 @@ class HtmlParser(object):
 
                         if (len(best_answer_id) != 0):
                             tmp_question = ""
+                            tmp_question_detail = ""
                             answers_count = ""
                         else:
                             if answers_id != answers_id_arr[0]:
                                 tmp_question = ""
+                                tmp_question_detail = ""
                                 answers_count = ""
 
                         # ['类别','问题', '问题详情', '回答','点赞数','踩数']
