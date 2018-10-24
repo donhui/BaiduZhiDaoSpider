@@ -44,6 +44,12 @@ class HtmlParser(object):
             else:
                 tmp_question_detail = ""
 
+            # 回答总数
+            if (len(tmp_etree.xpath('//*[@class="question-all-answers-title"]')) != 0):
+                answers_count = tmp_etree.xpath('//*[@class="question-all-answers-title"]')[0].text
+            else:
+                answers_count = ""
+
             # 回答
             # 判断是否存在best answer
             best_answer_id= re.findall("best-content-\d+",str(tmp_content))
@@ -63,9 +69,9 @@ class HtmlParser(object):
                 tmp_evaluate_terrible_num = tmp_etree.xpath(bad_rules)[0]
                 tmp_answer_content = all_content.split('</div>')[-2]
 
-                #['类别', '问题', '问题详情', '回答', '点赞数', '踩数']
+                #['类别', '问题', '问题详情', '回答总数', '回答', '点赞数', '踩数']
 
-                tmp_information = [tmp_category, tmp_question, tmp_question_detail, tmp_answer_content, tmp_evaluate_good_num,
+                tmp_information = [tmp_category, tmp_question, tmp_question_detail, answers_count, tmp_answer_content, tmp_evaluate_good_num,
                                    tmp_evaluate_terrible_num]
                 self.datas.append(tmp_information)
 
@@ -85,12 +91,14 @@ class HtmlParser(object):
 
                         if (len(best_answer_id) != 0):
                             tmp_question = ""
+                            answers_count = ""
                         else:
                             if answers_id != answers_id_arr[0]:
                                 tmp_question = ""
+                                answers_count = ""
 
                         # ['类别','问题', '问题详情', '回答','点赞数','踩数']
 
-                        tmp_information=[tmp_category, tmp_question, tmp_question_detail, tmp_answer_content,tmp_evaluate_good_num,tmp_evaluate_terrible_num]
+                        tmp_information=[tmp_category, tmp_question, tmp_question_detail, answers_count, tmp_answer_content,tmp_evaluate_good_num,tmp_evaluate_terrible_num]
                         self.datas.append(tmp_information)
         return self.datas
