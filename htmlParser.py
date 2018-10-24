@@ -31,11 +31,13 @@ class HtmlParser(object):
         for tmp_url in self.all_hrefs:
             tmp_content=self.htmlDownloader.download(tmp_url)
             tmp_etree=etree.HTML(tmp_content)
+            #print (tmp_content)
             # 问题
             if(len(tmp_etree.xpath('//*[@id="wgt-ask"]/h1/span'))!=0):
                 tmp_question=tmp_etree.xpath('//*[@id="wgt-ask"]/h1/span')[0].text
             else:
                 tmp_question=""
+
             # 回答
             # 判断是否存在best answer
             best_answer_id= re.findall("best-content-\d+",str(tmp_content))
@@ -53,24 +55,38 @@ class HtmlParser(object):
                 bad_rules='//*[@id="evaluate-bad-'+tmp_id+'"]/@data-evaluate'
                 tmp_evaluate_good_num = tmp_etree.xpath(good_rules)[0]
                 tmp_evaluate_terrible_num = tmp_etree.xpath(bad_rules)[0]
-                tmp_answer_content = all_content.split('</div>')[-2]                
+                tmp_answer_content = all_content.split('</div>')[-2]
+
+                #['类别', '问题', '回答', '点赞数', '踩数']
+
+                tmp_information = [tmp_category, tmp_question, tmp_answer_content, tmp_evaluate_good_num,
+                                   tmp_evaluate_terrible_num]
+                self.datas.append(tmp_information)
+
             else:
-                first_answer_id=re.findall("answer-content-\d+",str(tmp_content))
-                if(len(first_answer_id)!=0):
-                    first_answer=tmp_etree.xpath('//*[@id="'+first_answer_id[0]+'"]')[0]
-                    all_content=etree.tostring(first_answer,encoding = "utf-8", pretty_print = True, method = "html").decode('utf-8')
-                    tmp_answer_content.encode('utf-8').decode('utf-8')
-                    tmp_id= re.findall('answer-content-\d+',str(all_content))[0].split('-')[-1]
-                    good_rules='//*[@id="evaluate-'+tmp_id+'"]/@data-evaluate'
-                    bad_rules='//*[@id="evaluate-bad-'+tmp_id+'"]/@data-evaluate'
-                    tmp_evaluate_good_num = tmp_etree.xpath(good_rules)[0]
-                    tmp_evaluate_terrible_num = tmp_etree.xpath(bad_rules)[0]
-                    tmp_answer_content = all_content.split('</div>')[-2]
+                answers_id_arr=re.findall("answer-content-\d+",str(tmp_content))
+                if(len(answers_id_arr)!=0):
+                    for answers_id in answers_id_arr:
+                        answer=tmp_etree.xpath('//*[@id="'+answers_id+'"]')[0]
+                        all_content=etree.tostring(answer,encoding = "utf-8", pretty_print = True, method = "html").decode('utf-8')
+                        tmp_answer_content.encode('utf-8').decode('utf-8')
+                        tmp_id= re.findall('answer-content-\d+',str(all_content))[0].split('-')[-1]
+                        good_rules='//*[@id="evaluate-'+tmp_id+'"]/@data-evaluate'
+                        bad_rules='//*[@id="evaluate-bad-'+tmp_id+'"]/@data-evaluate'
+                        tmp_evaluate_good_num = tmp_etree.xpath(good_rules)[0]
+                        tmp_evaluate_terrible_num = tmp_etree.xpath(bad_rules)[0]
+                        tmp_answer_content = all_content.split('</div>')[-2]
 
-            # ['类别','问题','回答','点赞数','踩数']
+                        if (len(best_answer_id) != 0):
+                            tmp_question = ""
+                        else:
+                            if answers_id != answers_id_arr[0]:
+                                tmp_question = ""
 
-            tmp_information=[tmp_category,tmp_question,tmp_answer_content,tmp_evaluate_good_num,tmp_evaluate_terrible_num]
-            self.datas.append(tmp_information)
+                        # ['类别','问题', '回答','点赞数','踩数']
+
+                        tmp_information=[tmp_category,tmp_question,tmp_answer_content,tmp_evaluate_good_num,tmp_evaluate_terrible_num]
+                        self.datas.append(tmp_information)
         return self.datas
             
             

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class UrlManager(object):
     #初始化两个set ，分别存放新旧url
     def __init__(self):

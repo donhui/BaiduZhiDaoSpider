@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import urlManger as urlM
 import categories as cateG
 import htmlDownloader as htmlD
@@ -34,15 +35,15 @@ if __name__=='__main__':
     # 每个类别需要爬去的回答数
     threads = []
     paths=[]
-    category_Nums=200
+    category_Nums=800
 
     # cate="父母体检"
     # path="D:\\Works\\datas\\"+cate+"百度知道体检知识.xlsx"
     # runSpider(root_url,category_Nums,"父母体检",path)
-    for cate in categories:
-        path="D:\\Works\\datas\\outputFiles\\"+cate+"百度知道体检知识.xlsx"
+    for category in categories:
+        path="/Users/weidai/Desktop/BaiduZhiDaoSpider/outputFiles/百度知道" + category + ".xlsx"
         paths.append(path)
-        t= threading.Thread(target=runSpider,args=(root_url,category_Nums,cate,path))
+        t= threading.Thread(target=runSpider,args=(root_url,category_Nums,category,path))
         threads.append(t)
 
     for t in threads:
@@ -50,6 +51,3 @@ if __name__=='__main__':
         t.start()
     for t in threads:
         t.join()
-
-
-    
