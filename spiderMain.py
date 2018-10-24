@@ -41,7 +41,7 @@ if __name__=='__main__':
     # path="D:\\Works\\datas\\"+cate+"百度知道体检知识.xlsx"
     # runSpider(root_url,category_Nums,"父母体检",path)
     for category in categories:
-        path="/Users/weidai/Desktop/BaiduZhiDaoSpider/outputFiles/百度知道" + category + ".xlsx"
+        path="./outputFiles/百度知道-" + category + ".xlsx"
         paths.append(path)
         t= threading.Thread(target=runSpider,args=(root_url,category_Nums,category,path))
         threads.append(t)

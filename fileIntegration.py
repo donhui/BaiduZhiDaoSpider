@@ -8,9 +8,9 @@ paths=[]
 global_wb=workbook.Workbook()
 global_ws=global_wb.active
 
-last_path="D:\\Works\\datas\\outputFiles\\"+"百度知道体检知识.xlsx"
+last_path="./outputFiles/百度知道.xlsx"
 for cate in categories:
-    path="D:\\Works\\datas\\outputFiles\\"+cate+"百度知道体检知识.xlsx"
+    path="./outputFiles/百度知道-"+cate+".xlsx"
     paths.append(path)
     wb = load_workbook(path)
     a_sheet = wb.get_sheet_by_name('Sheet')
