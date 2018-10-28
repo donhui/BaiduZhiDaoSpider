@@ -13,14 +13,15 @@ class SpyderMain(object):
         self.htmlParser = htmlP.HtmlParser()
         ## construct the seach urls
         for pagesNum in range(int(category_Nums/10)):
-            self.searchUrlsManger.add_new_url(root_url+"word="+categories_Name+"&pn="+str(pagesNum*10))
+            self.searchUrlsManger.add_url(root_url+"word="+categories_Name+"&pn="+str(pagesNum*10))
         
         htmlDownloader = htmlD.HtmlDownloader()
                 ## search all the questions
         tmp_datas=[]
         dataOutput = DataOutput()
         for i in range(self.searchUrlsManger.get_urls_num()):
-            tmp_searchUrl=self.searchUrlsManger.get_new_url()
+            tmp_searchUrl=self.searchUrlsManger.urls[i]
+            print(tmp_searchUrl)
             tmp_content=htmlDownloader.download(tmp_searchUrl)
             tmp_data=self.htmlParser.parse(tmp_content,i)
             tmp_datas.extend(tmp_data)
