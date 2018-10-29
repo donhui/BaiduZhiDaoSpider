@@ -4,7 +4,7 @@ import re
 class HtmlParser(object):
 
     def __init__(self):
-        self.all_category_hrefs = set()
+        self.all_categories_hrefs = set()
         self.all_hrefs = []
         self.htmlDownloader = htmlD.HtmlDownloader()
         self.datas=[]
@@ -29,12 +29,12 @@ class HtmlParser(object):
         print('类别：'+tmp_category)
         self.get_all_href(html_content, page_num)
         for tmp_url in self.all_hrefs:
-            if(tmp_url in self.all_category_hrefs):
+            if(tmp_url in self.all_categories_hrefs):
                 print("skip parse: " + tmp_url)
             else:
                 if str(tmp_url).startswith("http://zhidao.baidu.com") or str(tmp_url).startswith("https://zhidao.baidu.com"):
                     # print("begin to parse: " + tmp_url)
-                    self.all_category_hrefs.add(tmp_url)
+                    self.all_categories_hrefs.add(tmp_url)
                     tmp_content = ""
                     try:
                         tmp_content=self.htmlDownloader.download(tmp_url)
