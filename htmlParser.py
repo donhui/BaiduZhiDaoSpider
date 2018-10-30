@@ -4,6 +4,7 @@ import re
 class HtmlParser(object):
 
     def __init__(self):
+        self.question_num = 0
         self.all_categories_hrefs = set()
         self.all_hrefs = []
         self.htmlDownloader = htmlD.HtmlDownloader()
@@ -42,6 +43,10 @@ class HtmlParser(object):
                         print(e)
                     if tmp_content != "":
                         tmp_etree=etree.HTML(tmp_content)
+
+                        # 问题编号
+                        self.question_num = self.question_num + 1
+                        tmp_question_num = self.question_num
 
                         # 问题
                         if(len(tmp_etree.xpath('//*[@id="wgt-ask"]/h1/span'))!=0):
@@ -87,9 +92,9 @@ class HtmlParser(object):
 
                             is_best_answer = "最佳答案"
 
-                            # ['类别', '问题', '问题详情', '回答总数', '回答', '回答时间','点赞数', '踩数'，'最佳答案']
+                            # ['类别', '问题编号', '问题', '问题详情', '回答总数', '回答', '回答时间','点赞数', '踩数'，'最佳答案']
 
-                            tmp_information = [tmp_category, tmp_question, tmp_question_detail, answers_count,
+                            tmp_information = [tmp_category, tmp_question_num, tmp_question, tmp_question_detail, answers_count,
                                                tmp_answer_content, reply_date,
                                                tmp_evaluate_good_num,tmp_evaluate_terrible_num, is_best_answer]
                             self.datas.append(tmp_information)
@@ -112,19 +117,21 @@ class HtmlParser(object):
                                     reply_date = tmp_etree.xpath(reply_date_rules)[0].text.replace("推荐于","")
 
                                     if (len(best_answer_id) != 0):
+                                        tmp_question_num = ""
                                         tmp_question = ""
                                         tmp_question_detail = ""
                                         answers_count = ""
                                     else:
                                         if answers_id != answers_id_arr[0]:
+                                            tmp_question_num = ""
                                             tmp_question = ""
                                             tmp_question_detail = ""
                                             answers_count = ""
                                     is_best_answer = ""
 
-                                    # ['类别','问题', '问题详情', '回答','点赞数','踩数', '最佳答案']
+                                    # ['类别', '问题编号', '问题', '问题详情', '回答','点赞数','踩数', '最佳答案']
 
-                                    tmp_information = [tmp_category, tmp_question, tmp_question_detail, answers_count,
+                                    tmp_information = [tmp_category, tmp_question_num, tmp_question, tmp_question_detail, answers_count,
                                                        tmp_answer_content, reply_date,
                                                        tmp_evaluate_good_num, tmp_evaluate_terrible_num, is_best_answer]
                                     self.datas.append(tmp_information)
