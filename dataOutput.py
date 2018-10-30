@@ -7,7 +7,7 @@ class DataOutput(object):
         self.datas=[]
         self.wb = workbook.Workbook()  # 创建Excel对象
         self.ws = self.wb.active  # 获取当前正在操作的表对象
-        self.ws.append(['类别', '问题编号', '问题','问题详情','回答总数', '回答编号', '回答', '回答时间','点赞数','踩数', '最佳答案'])
+        self.ws.append(['类别', '问题编号', '问题链接', '问题','问题详情','回答总数', '回答编号', '回答', '回答时间','点赞数','踩数', '最佳答案'])
      
     def collect_data(slef,data):
         if data is None:

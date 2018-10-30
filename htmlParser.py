@@ -94,10 +94,10 @@ class HtmlParser(object):
 
                             is_best_answer = "最佳答案"
 
-                            # ['类别', '问题编号', '问题', '问题详情', '回答总数', '回答编号', '回答', '回答时间','点赞数', '踩数'，'最佳答案']
+                            # ['类别', '问题编号', '问题链接', '问题', '问题详情', '回答总数', '回答编号', '回答', '回答时间','点赞数', '踩数'，'最佳答案']
 
-                            tmp_information = [tmp_category, tmp_question_num, tmp_question, tmp_question_detail, answers_count,
-                                               answer_num, tmp_answer_content, reply_date,
+                            tmp_information = [tmp_category, tmp_question_num, tmp_url, tmp_question, tmp_question_detail,
+                                               answers_count, answer_num, tmp_answer_content, reply_date,
                                                tmp_evaluate_good_num,tmp_evaluate_terrible_num, is_best_answer]
                             self.datas.append(tmp_information)
                             answer_num = answer_num + 1
@@ -124,17 +124,19 @@ class HtmlParser(object):
                                         tmp_question = ""
                                         tmp_question_detail = ""
                                         answers_count = ""
+                                        tmp_url = ""
                                     else:
                                         if answers_id != answers_id_arr[0]:
                                             tmp_question_num = ""
                                             tmp_question = ""
                                             tmp_question_detail = ""
                                             answers_count = ""
+                                            tmp_url = ""
                                     is_best_answer = ""
 
-                                    # ['类别', '问题编号', '问题', '问题详情', '回答总数', '回答编号', '回答', '回答时间','点赞数', '踩数'，'最佳答案']
+                                    # ['类别', '问题编号', '问题', '问题链接', '问题详情', '回答总数', '回答编号', '回答', '回答时间','点赞数', '踩数'，'最佳答案']
 
-                                    tmp_information = [tmp_category, tmp_question_num, tmp_question, tmp_question_detail, answers_count,
+                                    tmp_information = [tmp_category, tmp_question_num, tmp_url, tmp_question, tmp_question_detail, answers_count,
                                                        answer_num, tmp_answer_content, reply_date,
                                                        tmp_evaluate_good_num, tmp_evaluate_terrible_num, is_best_answer]
                                     self.datas.append(tmp_information)
